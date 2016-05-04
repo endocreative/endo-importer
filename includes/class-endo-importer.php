@@ -2,6 +2,10 @@
 
 class Endo_Importer {
 
+	/**
+	 * Get everything started
+	 * @since 1.0.0
+	 */
 	public function run() {
 
 		add_action('admin_enqueue_scripts', array( $this, 'load_importer_scripts') );
@@ -14,27 +18,31 @@ class Endo_Importer {
 	}
 
 
-	
+	/**
+	 * Load the admin scripts for the settings page
+	 * @since 1.0.0
+	 */
 	public function load_importer_scripts() {
 
 		wp_enqueue_media();
 		wp_enqueue_script( 'endo-importer', plugin_dir_url( __FILE__ ) . 'js/importer.js', array('jquery'), '10', true );
-		
-		$protocol = isset( $_SERVER['HTTPS'] ) ? 'https://' : 'http://';
-		$params = array(
-			'ajaxurl' => admin_url( 'admin-ajax.php', $protocol )
-		);
-		wp_localize_script( 'calculator-importer', 'importer_data', $params );
 
 	}
 
+	/**
+	 * Create a top level menu page
+	 * @since 1.0.0
+	 */
 	public function create_admin_menu() {
 
 		add_menu_page( 'Endo Importer', 'Endo Importer', 'manage_options', 'endo-importer-page', array( $this, 'endo_importer_page') );
 
 	}
 
-
+	/**
+	 * Display the settings fields and run the main import functionality
+	 * @since 1.0.0
+	 */
 	public function endo_importer_page() {
 
 		$options = get_option('endo_ui_options');
@@ -176,7 +184,10 @@ class Endo_Importer {
 
 	}
 
-
+	/**
+	 * Create the fields for the settings page
+	 * @since 1.0.0
+	 */
 	public function create_importer_settings() {
 
 		register_setting(
@@ -200,10 +211,12 @@ class Endo_Importer {
 	        'endo_ui_general'       
 	    );
 
-	    
-
 	}
 
+	/**
+	 * Create the upload csv field
+	 * @since 1.0.0
+	 */
 	public function endo_ui_text_input() {
 
 		$options = wp_parse_args( get_option( 'endo_ui_options' ), array('csv_file' => ''));
@@ -216,12 +229,18 @@ class Endo_Importer {
 	    <?php 
 	}
 
-	
+	/**
+	 * Run any special validation on the settings inputs
+	 * @since 1.0.0
+	 */
 	public function endo_importer_validate_options( $input ) {
 	    return $input;
 	}
 
-
+	/**
+	 * Converts the csv file into an array
+	 * @since 1.0.0
+	 */
 	public function csv_to_array( $filename = '', $delimiter = ',' ) {
 
 		if (!file_exists($filename) || !is_readable($filename)) {
@@ -248,6 +267,10 @@ class Endo_Importer {
 
 	}
 
+	/**
+	 * Helper function to delete lots of posts at once. Especially helpful if there is an error on import.
+	 * @since 1.0.0
+	 */
 	public function delete_extra_posts() {
 
 		$post_type = 'apartment';

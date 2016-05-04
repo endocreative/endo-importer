@@ -2,7 +2,7 @@
 
 	$(document).ready( function() {
 		
-		// custom media uploader for user import page
+		// custom media uploader for import page
  
 	    var user_custom_uploader;
 	 

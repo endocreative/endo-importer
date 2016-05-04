@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Endo Importer
  * Plugin URI: http://www.endocreative.com
- * Description: A custom importer
+ * Description: A basic class for bulk importing posts or users via a CSV file.
  * Version: 1.0.0
  * Author: Endo Creative
  * Author URI: http://www.endocreative.com
